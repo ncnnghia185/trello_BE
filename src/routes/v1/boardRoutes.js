@@ -1,13 +1,14 @@
 import express from 'express'
 import { StatusCodes} from 'http-status-codes'
+import { boardController } from '../../controllers/boardController.js'
+import { boardValidation } from '../../validations/boardValidation.js'
+
 const Router = express.Router()
 
 Router.route('/')
 	.get( (req, res) => {
 		res.status(StatusCodes.OK).json({ message : 'Note : API get list boards'})
 	})
-	.post( (req, res) => {
-		res.status(StatusCodes.CREATED).json({ message : 'Note : API create new board'})
-	})
+	.post( boardValidation.createNew, boardController.createNew)
 
 export const boardRoutes = Router
