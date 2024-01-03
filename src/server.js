@@ -3,12 +3,15 @@ import exitHook from 'async-exit-hook'
 import { CONNECT_DB, GET_DB, CLOSE_DB } from '../src/config/mongodb.js'
 import { env } from '../src/config/environment.js'
 import { APIs_V1 } from '../src/routes/v1/index.js'
+import { errorHandlingMiddleware } from './middlewares/errorHandlingMiddleware.js'
 
 const START_SERVER = () =>{
 	const app = express()
 	const PORT = env.PORT
 	
 	app.use('/v1', APIs_V1)
+	// Middleware xử lý lỗi
+	app.use(errorHandlingMiddleware)
 	app.listen(PORT, () => {
 		console.log('Server listening on port'+ PORT)
 	}
